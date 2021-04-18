@@ -297,7 +297,7 @@ def check_compiler_abi_compatibility(compiler) -> bool:
             version = versionstr.decode().strip().split('.')
         else:
             minimum_required_version = MINIMUM_MSVC_VERSION
-            compiler_info = subprocess.check_output(compiler, stderr=subprocess.STDOUT)
+            compiler_info = subprocess.check_output(f'chcp 65001 | {compiler}', stderr=subprocess.STDOUT, shell=True)
             match = re.search(r'(\d+)\.(\d+)\.(\d+)', compiler_info.decode().strip())
             version = (0, 0, 0) if match is None else match.groups()
     except Exception:
